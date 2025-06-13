@@ -1,21 +1,20 @@
 # H4D Assistant Chatbot (Production Deployment)
 
-This repository contains the source code for the H4D Assistant, a secure, multi-user chatbot application powered by the OpenAI API. It features a Python Flask backend that provides a REST API and serves an optimized React frontend for the user interface.
+This repository contains the source code for the H4D Assistant, a chatbot application powered by the OpenAI API. It features a Python Flask backend that provides a REST API and serves an optimized React frontend for the user interface.
 
-User authentication is handled via a local SQLite database, and the application is designed to be hosted permanently on a server and start automatically on boot using `systemd`.
+The application is designed to be hosted permanently on a server and start automatically on boot using `systemd`.
 
 ## Core Features
 
 -   **Optimized React Frontend**: A fast, responsive chat interface built for production using `npm run build`.
--   **Unified Python Backend**: A single Flask server handles API requests, serves the static frontend files, and manages user authentication.
--   **Secure User Accounts**: Includes user registration, login, and password reset functionality to protect API key usage.
+-   **Unified Python Backend**: A single Flask server handles API requests and serves the static frontend files.
 -   **Persistent & Automated**: Designed for permanent hosting with scripts to automate setup and a `systemd` service for autostarting on system boot.
 
 ---
 
 ## 🚀 One-Time Setup on a New Machine
 
-These steps will guide you through cloning the repository and installing all necessary dependencies on a new machine.
+These steps will guide you through installing all necessary dependencies and preparing the application to run.
 
 1.  **Prerequisites**
     Ensure the following are installed on your Ubuntu machine:
@@ -25,7 +24,7 @@ These steps will guide you through cloning the repository and installing all nec
     -   **`loclx`**: The LocalXpose client, installed and authenticated.
 
 2.  **Get the Project Files**
-    Transfer the `H4Dassistant` project folder to your new machine (e.g., via a USB drive or by cloning from your GitHub repository if you chose to create one). Place it in your desired location, for example: `~/Documents/AI/`.
+    Transfer the `H4Dassistant` project folder to your new machine (e.g., via a USB drive or by cloning from your GitHub repository). Place it in your desired location, for example: `~/Documents/AI/`.
 
 3.  **Make Scripts Executable**
     From the project's root `H4Dassistant` directory, run this one-time command to grant execute permissions.
