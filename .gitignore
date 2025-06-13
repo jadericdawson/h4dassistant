@@ -1,6 +1,5 @@
 # --- Environment ---
-# Ignore all local environment files that contain secrets.
-# NEVER commit your actual .env file to GitHub.
+# Ignore all local environment files that contain actual secrets.
 .env
 api/.env
 .env.*
