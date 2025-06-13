@@ -1,0 +1,236 @@
+/* src/App.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+    background-color: #1a1a1d;
+    color: #f0f0f0;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* IMPROVEMENT: Make the app wider with padding */
+.App {
+    width: 95%; /* Use a percentage for width */
+    max-width: 1400px; /* Set a max-width for very large screens */
+    height: 90vh; /* Restore original vertical height */
+    background-color: #2c2c34;
+    border-radius: 15px; /* Restore rounded corners */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); /* Restore shadow */
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    padding: 15px 30px; /* Increased padding */
+    text-align: center;
+    border-bottom: 1px solid #444;
+    position: relative;
+    flex-shrink: 0;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.new-chat-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.new-chat-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.chat-window {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.chat-content {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.user-container {
+    align-items: flex-end;
+}
+
+.assistant-container {
+    align-items: flex-start;
+}
+
+.message {
+    max-width: 85%;
+    padding: 12px 20px;
+    border-radius: 22px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+.user {
+    background-color: #007bff;
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+
+.assistant {
+    background-color: #4a4a58;
+    color: #f0f0f0;
+    border-bottom-left-radius: 5px;
+}
+
+/* --- Styles for Markdown Content --- */
+.assistant h1, .assistant h2, .assistant h3 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #5a5a68;
+    padding-bottom: 0.3em;
+}
+.assistant p {
+    margin-bottom: 1em;
+}
+.assistant ul, .assistant ol {
+    padding-left: 20px;
+    margin-bottom: 1em;
+}
+.assistant li {
+    margin-bottom: 0.5em;
+}
+.assistant code {
+    background-color: #2c2c34;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.assistant pre {
+    background-color: #2c2c34;
+    padding: 10px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+.assistant table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+}
+.assistant th, .assistant td {
+    border: 1px solid #5a5a68;
+    padding: 8px;
+    text-align: left;
+}
+.assistant th {
+    background-color: #3a3a4a;
+}
+.assistant blockquote {
+    border-left: 4px solid #6a11cb;
+    padding-left: 1em;
+    margin-left: 0;
+    color: #c0c0c0;
+}
+
+.input-area {
+    padding: 20px;
+    border-top: 1px solid #444;
+    flex-shrink: 0;
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 30px;
+    background-color: #3a3a4a;
+    color: #f0f0f0;
+    font-size: 1rem;
+    outline: none;
+    margin-right: 10px;
+}
+
+button {
+    padding: 15px 25px;
+    border: none;
+    background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background: #555;
+    transform: none;
+}
+
+/* --- Styles for the live thinking bubble --- */
+.thinking-bubble {
+    align-self: flex-start;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid #4a4a58;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 8px;
+    max-width: 85%;
+    color: #a0a0b0;
+}
+
+.thinking-bubble strong {
+    color: #f0f0f0;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.thinking-bubble ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.thinking-bubble li {
+    margin-bottom: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}

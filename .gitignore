@@ -1,0 +1,70 @@
+# --- Environment ---
+# Ignore all local environment files that contain secrets.
+# NEVER commit your actual .env file to GitHub.
+.env
+api/.env
+.env.*
+
+# --- Python ---
+# Ignore the virtual environment folder.
+.venv/
+venv/
+ENV/
+env/
+
+# Ignore Python bytecode and cache.
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Python distribution and packaging artifacts.
+dist/
+*.egg-info/
+*.egg
+
+# Ignore SQLite database files.
+*.sqlite3
+*.db
+users.db
+
+
+# --- Node.js ---
+# Ignore the massive folder of Node.js dependencies.
+modern-chatbot/node_modules/
+node_modules/
+
+# Ignore the optimized production build output.
+modern-chatbot/build/
+build/
+
+
+# --- Project-Specific ---
+# Ignore the local vector database folder.
+chroma_db/
+
+# Ignore PID files created by the start/stop scripts.
+.server.pid
+.tunnel.pid
+
+
+# --- Legacy & Development Files ---
+# Ignore old server scripts from the root directory.
+H4D_Assistant.py
+server.py
+server copy.py
+server_short_cool.py
+
+# Ignore old development shell scripts from the root directory.
+start_chatbot.sh
+stop_chatbot.sh
+setup.sh
+autostart.sh
+
+
+# --- IDE & OS ---
+# Ignore common editor and operating system files.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
