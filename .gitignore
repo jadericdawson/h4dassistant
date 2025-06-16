@@ -22,11 +22,10 @@ dist/
 *.egg-info/
 *.egg
 
-# Ignore SQLite database files.
+# Ignore SQLite database files if used.
 *.sqlite3
 *.db
 users.db
-
 
 # --- Node.js ---
 # Ignore the massive folder of Node.js dependencies.
@@ -37,7 +36,6 @@ node_modules/
 modern-chatbot/build/
 build/
 
-
 # --- Project-Specific ---
 # Ignore the local vector database folder.
 chroma_db/
@@ -46,6 +44,12 @@ chroma_db/
 .server.pid
 .tunnel.pid
 
+# Ignore log files
+*.log
+loclx.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # --- Legacy & Development Files ---
 # Ignore old server scripts from the root directory.
@@ -60,10 +64,10 @@ stop_chatbot.sh
 setup.sh
 autostart.sh
 
-
 # --- IDE & OS ---
 # Ignore common editor and operating system files.
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+!api/.env.example
