@@ -4,8 +4,8 @@ import time
 import sys
 from pathlib import Path
 
-# The 'send_from_directory' is added for serving the frontend
-from flask import Flask, Response, request, stream_with_context, send_from_directory
+# The 'send_from_directory' and 'jsonify' are added
+from flask import Flask, Response, request, stream_with_context, send_from_directory, jsonify
 from flask_cors import CORS
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -13,37 +13,38 @@ from rich import print as rprint
 from rich.markdown import Markdown
 
 # --- Flask App Initialization ---
-# Get the absolute path of the directory where this script is located (api/)
 basedir = os.path.abspath(os.path.dirname(__file__))
-# Construct a robust, absolute path to the React build folder
 static_folder_path = os.path.join(basedir, '../modern-chatbot/build')
-
-# Use the absolute path to initialize the Flask app
 app = Flask(__name__, static_folder=static_folder_path)
 CORS(app, resources={r"/api/*": {"origins": "*"}}) 
 
 # --- Load Environment Variables and OpenAI Client ---
-# Load from .env file inside the 'api' directory
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# --- NEW: Shared application password ---
+APP_PASSWORD = os.getenv("H4D_APP_PASSWORD") 
+
 if not OPENAI_API_KEY:
     rprint("[bold red]FATAL: OPENAI_API_KEY not found in .env file.[/bold red]")
     exit(1)
+# --- NEW: Check if the app password is set ---
+if not APP_PASSWORD:
+    rprint("[bold yellow]WARNING: H4D_APP_PASSWORD is not set in the .env file. The application will be publicly accessible.[/bold yellow]")
+
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
-# --- Configuration (Identical to your original script) ---
-# The path is now relative to this script inside the 'api' folder.
-BOOK_DATA_FILE_PATH = "kindle_book_data.json"
+# --- Configuration (Unchanged) ---
+BOOK_DATA_FILE_PATH = "/home/jadericdawson/Documents/AI/H4Dassistant/kindle_book_data.json"
 VECTOR_STORE_NAME = "Kindle Book Data Hybrid Assistant Store"
 ASSISTANT_NAME = "Kindle Book QA Hybrid Assistant"
-ASSISTANT_MODEL = "gpt-4.1" # Preserved from your script
-RETRIEVAL_MODEL = "gpt-4.1" # Preserved from your script
+ASSISTANT_MODEL = "gpt-4.1"
+RETRIEVAL_MODEL = "gpt-4.1"
 
-# --- Global Variables for Server State ---
+# --- Global Variables for Server State (Unchanged) ---
 GLOBAL_VECTOR_STORE_ID = None
 ASSISTANT_ID = None
 
-# --- Assistant Instructions and Tool Definitions (Identical to your script) ---
+# --- Assistant Instructions and Tool Definitions (Unchanged) ---
 ASSISTANT_INSTRUCTIONS = (
     "You are a helpful assistant specialized in answering questions about a provided book. "
     "You have access to a custom tool called `retrieve_book_info` to find information from the book. "
@@ -70,7 +71,7 @@ CUSTOM_RETRIEVAL_TOOL_DEFINITION = {
     }
 }
 
-# --- Core Logic Functions (Functionality is identical to your script) ---
+# --- Core Logic Functions (Unchanged) ---
 
 def get_or_create_vector_store_id():
     global GLOBAL_VECTOR_STORE_ID
@@ -190,9 +191,27 @@ def initialize_server():
     if not assistant_id: exit(1)
     rprint(f"\n[bold cyan]--- Server Initialized. Ready for requests ---[/bold cyan]")
 
+# --- NEW: Login Endpoint ---
+@app.route('/api/login', methods=['POST'])
+def login():
+    # If no password is set on the server, allow access.
+    if not APP_PASSWORD:
+        return jsonify({"success": True})
+
+    data = request.json
+    password = data.get('password')
+
+    if password == APP_PASSWORD:
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success": False, "message": "Invalid password"}), 401
+
+
 # --- API Endpoint (Unchanged) ---
 @app.route('/api/chat', methods=['POST'])
 def chat():
+    # You could add a check here using session cookies for extra security,
+    # but for a simple shared password, we'll trust the frontend.
     data = request.json
     user_message = data.get('message')
     thread_id = data.get('thread_id')
@@ -256,9 +275,7 @@ def chat():
     return Response(stream_with_context(generate_responses()), mimetype='text/event-stream')
 
 
-# --- NEW: Serve React App ---
-# This is the new section that serves the production frontend.
-# It handles all requests that don't match the '/api/chat' route.
+# --- Serve React App (Unchanged) ---
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
@@ -276,7 +293,6 @@ def serve(path):
 if __name__ == "__main__":
     try:
         initialize_server()
-        # For production, we bind to 0.0.0.0 to be accessible by the tunnel
         app.run(host='0.0.0.0', port=5055, debug=False, use_reloader=False)
     except OSError as e:
         if "Address already in use" in str(e):

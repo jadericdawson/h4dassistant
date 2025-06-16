@@ -21,11 +21,7 @@ sleep 5
 # --- Start Loclx Tunnel ---
 # This points your public domain to the unified server.
 echo "[2/2] Starting loclx tunnel for h4dassistant.com..."
-
-#/usr/bin/loclx tunnel http --to localhost:5055 --reserved-domain h4dassistant.com &
-# This version redirects all output to a log file, making it stable for systemd.
-/usr/bin/loclx tunnel http --to localhost:5055 --reserved-domain h4dassistant.com > /home/jadericdawson/loclx.log 2>&1 &
-
+loclx tunnel http --to localhost:5055 --reserved-domain h4dassistant.com &
 TUNNEL_PID=$!
 echo "   ↳ Tunnel PID: $TUNNEL_PID"
 
